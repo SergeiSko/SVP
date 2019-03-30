@@ -20,7 +20,7 @@ app.get("/getJSON", function(req, res){
   res.sendfile('test.json');
 });
 
-app.post("/Date", function(req, res){
+app.post("/Data", function(req, res){
   console.log(req.body.name);
   res.send(`Идите нахуй ${req.body.name}`);
 });
