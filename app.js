@@ -27,6 +27,10 @@ app.post("/Data", function(req, res){
     res.setHeader('Content-Type', 'text/plain');
     res.send(`ДАрова, ${req.body.name}!!!`);
   }
+  else {
+    res.statusCode = 434;
+    res.send(`Data ${req.body.name}`);
+  }
 });
 
 app.get("*", function(req, res){
