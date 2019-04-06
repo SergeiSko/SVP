@@ -29,7 +29,6 @@ app.post("/Data", function(req, res){
   }
 });
 
-
 app.get("*", function(req, res){
   res.send('not found');
 });
