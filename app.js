@@ -34,7 +34,7 @@ app.post("/Data", function(req, res){
 });
 
 app.get("*", function(req, res){
-  res.send('not found');
+  res.send('not found(my)');
 });
 
 app.listen(port, function(){
