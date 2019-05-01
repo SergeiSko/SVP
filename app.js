@@ -6,7 +6,7 @@ var express = require('express');
 
 app.use(express.static(__dirname + '/public'));
 app.use(parser.json());
-app.use(parser.urlencoded({extended: true}));
+app.use(parser.urlencoded({extended: false}));
 
 app.get("/", function(req, res){
   res.statusCode = 200;
@@ -25,7 +25,7 @@ app.post("/Data", function(req, res){
   if(res != "undefined"){
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/plain');
-    res.send(`ДАрова, ${req.body.name}!!!`);
+    res.send(`Hello, ${req.body.name}!!!`);
   }
   else {
     res.statusCode = 434;
@@ -34,6 +34,8 @@ app.post("/Data", function(req, res){
 });
 
 app.get("*", function(req, res){
+  res.statusCode = 404;
+  res.setHeader('Content-Type', 'text/plain');
   res.send('not found(my)');
 });
 
