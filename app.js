@@ -1,5 +1,6 @@
 var express = require('express');
     parser = require('body-parser');
+    mongodb = require('mongodb').MongoClient;
     app = express();
     port = 3000;
 //var file = require('test.json');
@@ -23,7 +24,7 @@ app.get("/getJSON", function(req, res){
 app.get("/str", function(req, res){
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/plain');
-  res.send("str")
+  res.send("Good response.");
 });
 
 app.post("/Data", function(req, res){
