@@ -3,21 +3,47 @@
   <head>
     <meta charset="utf-8">
     <title>Регистрация</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
   </head>
   <body>
+    <table class="top">
+      <tr>
+        <td><h1 class="logo">logoSVP</h1></td>
+        <td><h1 class="menu">Menu</h1></td>
+        <td><h1 class="menu">Menu 2</h1></td>
+        <td><h1 class="menu">Menu 3</h1></td>
+      </tr>
+    </table>
     <form class="" action="/Data" method="post">
-      <table>
-        <tr>
-          <td>Имя:</td>
-          <td><input type="text" id="name" name="name" placeholder="Введите имя."></td>
-        </tr>
-        <tr>
-          <td>Возраст:</td>
-          <td><input type="text" id="age" name="age" placeholder="Введите возраст."></td>
-        </tr>
-        <tr>
-          <td><input type="submit" name="date" value="Отправить"></td>
-        </tr>
+      <table class="registration">
+          <!-- <tr><td class="backLogo"><h1 class="logo">logoSVP</h1></td></tr> -->
+            <tr>
+              <td>Имя:</td>
+              <td><input type="text" id="name" name="name" placeholder="Введите имя."></td>
+            </tr>
+            <tr>
+              <td>Возраст:</td>
+              <td><input type="text" id="age" name="age" placeholder="Введите возраст."></td>
+            </tr>
+            <tr>
+              <td><input type="submit" name="date" value="Отправить"></td>
+            </tr>
+      </table>
+    </form>
+    <form class="" action="/test" method="post">
+      <table class="test">
+          <!-- <tr><td class="backLogo"><h1 class="logo">logoSVP</h1></td></tr> -->
+            <tr>
+              <td>Поле 1:</td>
+              <td><input type="text" id="place1" name="place1" placeholder="Поле place1."></td>
+            </tr>
+            <tr>
+              <td>Поле 2:</td>
+              <td><input type="text" id="place2" name="place2" placeholder="Поле place2."></td>
+            </tr>
+            <tr>
+              <td><input type="submit" name="test" value="Отправить"></td>
+            </tr>
       </table>
     </form>
   </body>

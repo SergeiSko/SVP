@@ -1,0 +1,33 @@
+table.registration{
+  background: #FFFFAA;
+  position: fixed; top: 25%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+table.test{
+    background: #AAFFAA;
+    position: fixed; top: 38%; left: 50%;
+    transform: translate(-50%, -50%);
+}
+@font-face {
+  font-family: "logo";
+  src:  url(font/tologo.ttf);
+}
+@font-face {
+  font-family: "menu";
+  src: url(font/totext.otf);
+}
+h1.logo {
+  height: 120%;
+  color: #571414;
+  font-family: "logo";
+}
+h1.menu {
+  color: #571414;
+  font-family: "menu";
+}
+.top {
+  margin: 0 auto;
+  background-color: #9ABBE6;
+  border: 6px solid #5A7B96;
+  border-radius: 25px;
+}
