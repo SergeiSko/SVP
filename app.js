@@ -40,13 +40,25 @@ app.post("/Data", function(req, res){
   }
 });
 
+app.post("/test", function(req, res){
+  console.log(req.body);
+  if(res != "undefined"){
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/plain');
+    res.send("god")
+  }
+});
+
 app.get("*", function(req, res){
   res.statusCode = 404;
   res.setHeader('Content-Type', 'text/plain');
   res.send('not found(my)');
 });
 
-app.listen(port, function(){
+app.listen(port, (err) => {
+  if(err){
+    return console.error(`Server error: ${err}`);
+  }
   console.log(`Listening: ${port} port.`);
 
 });
