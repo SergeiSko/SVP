@@ -17,7 +17,7 @@ table.test{
   src: url(font/totext.otf);
 }
 h1.logo {
-  height: 120%;
+  font-size: 50pt;
   color: #571414;
   font-family: "logo";
 }
