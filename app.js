@@ -39,7 +39,7 @@ const requestHandler = (req, res) => {
 app.get("/", function(req, res){
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/plain');
-  
+  //res.send(__dirname + 'public/index.html');
   res.send(__dirname + 'public/index.html');
 });
 
