@@ -1,13 +1,14 @@
 const express = require('express');
       parser = require('body-parser');
       MongoClient = require('mongodb').MongoClient;
-      ejs = require('ejs');
-      promisify = require('util').promisify;
       app = express();
       port = 3000;
+      ejs = require('ejs');
+      promisify = require('util').promisify;
+      users = require(__dirname + '\\public\\libs\\users');
 //var file = require('test.json');
 
-app.use(express.static(__dirname + '/public'));
+app.use("public", express.static(__dirname + '/public'));
 app.use(parser.json());
 app.use(parser.urlencoded({extended: false}));
 
@@ -39,9 +40,14 @@ const requestHandler = (req, res) => {
 app.get("/", function(req, res){
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/plain');
+  //res.send('hhuuh');
+  //res.sendfile(__dirname + '\\public\\template\\template.ejs');
   //res.send(__dirname + 'public/index.html');
-  //res.sendfile(__dirname + 'template/template.ejs');
-  res.send("html");
+  let params = {};
+  params.page = 'insert';
+
+  const wordArray = users.itemsRu;
+  res.send("-->" + users);
 });
 
 app.get("/getJSON", function(req, res){
