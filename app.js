@@ -4,27 +4,37 @@ const express = require('express');
       app = express();
       port = 3000;
 
-app.use("public", express.static(__dirname + '/public'));
+app.use("/public", express.static(__dirname + '/public'));
 app.use(parser.json());
 app.use(parser.urlencoded({extended: false}));
-
 const mongoClient = new MongoClient("mongodb://localhost:27017", {useNewUrlParser: true});
-mongoClient.connect(function(err, client) {
-  if(err){
-    return console.log(err);
-  }
 
-  const db = client.db("dbV1");
-  const collection = db.collection("users");
-
-
-  client.close();
-});
 
 app.get("/", function(req, res){
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/plain');
-  //res.send(__dirname + 'public/index.html');
+  res.send(__dirname + '\\public\\index.html');
+});
+
+app.post("/test", function(req, res){
+  console.log(req.body);
+  if(res != "undefined"){
+    res.statusCode = 200;
+    let users = [{name: "Sergei", surname: "Skoblin", age: 20},
+                 {name: "Petr", surname: "Ivanov", age: 20}]
+    mongoClient.connect(function(err, client) {
+      const db = client.db("usersdb");
+      const collection = db.collection("users");
+
+      collection.insertMany(users, function(err, results){
+        console.log(results);
+        res.send(results);
+        client.close();
+      })
+
+      client.close();
+    });
+  }
 });
 
 app.get("/getJSON", function(req, res){
@@ -49,15 +59,6 @@ app.post("/Data", function(req, res){
   else {
     res.statusCode = 434;
     res.send(`Data ${req.body.name}`);
-  }
-});
-
-app.post("/test", function(req, res){
-  console.log(req.body);
-  if(res != "undefined"){
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
-    res.send('god');
   }
 });
 

@@ -1,5 +1,3 @@
 {
-  "row":[
-    "Sergei","Skoblin","Vladimirovich"
-  ]
+  "users":[{"Name": "Sergei","Surname": "Skoblin","Patronymic": "Vladimirovich"}]
 }
