@@ -40,14 +40,9 @@ const requestHandler = (req, res) => {
 app.get("/", function(req, res){
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/plain');
-  //res.send('hhuuh');
-  //res.sendfile(__dirname + '\\public\\template\\template.ejs');
   //res.send(__dirname + 'public/index.html');
   let params = {};
   params.page = 'insert';
-
-  const wordArray = users.itemsRu;
-  res.send("-->" + users);
 });
 
 app.get("/getJSON", function(req, res){
