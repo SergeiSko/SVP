@@ -25,6 +25,11 @@ app.get("/", function(req, res){
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/plain');
   //res.send(__dirname + 'public/index.html');
+<<<<<<< HEAD
+=======
+  let params = {};
+  params.page = 'insert';
+>>>>>>> 9544dccb7dface33bdeb7e0390be232e505c7cb7
 });
 
 app.get("/getJSON", function(req, res){
