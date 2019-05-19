@@ -41,12 +41,6 @@ app.get("/getJSON", function(req, res){
   res.sendfile('test.json');
 });
 
-app.get("/str", function(req, res){
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.send("Good response.");
-});
-
 app.post("/Data", function(req, res){
   console.log(req.body.name);
   if(res != "undefined"){
