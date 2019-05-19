@@ -17,6 +17,8 @@ app.get("/", function(req, res){
 });
 
 app.post("/sendMDB", function(req, res){
+
+  const mongoClient = new MongoClient(urldb, {useNewUrlParser: true});
   let users = [{name: "Sergei", surname: "Skoblin", age: 20},
               {name: "Petr", surname: "Ivanov", age: 20}];
   mongoClient.connect(function(err, client) {
