@@ -43,7 +43,7 @@ app.get("/getMDB", function(req, res){
     const collection = db.collection("users");
 
     collection.find().toArray(function(err, results) {
-      console.log("Sended db data");
+      console.log("Get db data(get-test)");
       res.send(results);
       client.close();
     });
@@ -59,7 +59,7 @@ app.post("/sendMDB", function(req, res){
     const collection = db.collection("users");
 
     collection.insertMany(users, function(err, results){
-      console.log(results);
+      console.log("Sended db data(send-test)");
       client.close();
 
       res.statusCode = 200;
@@ -69,7 +69,7 @@ app.post("/sendMDB", function(req, res){
   });
 });
 
-app.get("/registration", function(req, res) {
+app.post("/registration", function(req, res) {
   let users = {name: req.body.name, surname: req.body.surname, age: req.body.age};
     const mongoClient = new MongoClient(urldb, {useNewUrlParser: true});
     mongoClient.connect(function(err, client) {
@@ -77,7 +77,7 @@ app.get("/registration", function(req, res) {
       const collection = db.collection("users");
 
       collection.insertOne(users, function(err, results){
-        console.log(results);
+        console.log("Sended db data(registration)");
         client.close();
         res.send(results);
         res.statusCode = 200;
