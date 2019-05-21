@@ -16,25 +16,6 @@ app.get("/", function(req, res){
   res.send('public/index.html');
 });
 
-app.post("/sendMDB", function(req, res){
-  const mongoClient = new MongoClient(urldb, {useNewUrlParser: true});
-  let users = [{name: "Sergei", surname: "Skoblin", age: 20},
-              {name: "Petr", surname: "Ivanov", age: 20}];
-  mongoClient.connect(function(err, client) {
-    const db = client.db("usersdb");
-    const collection = db.collection("users");
-
-    collection.insertMany(users, function(err, results){
-      console.log(results);
-      client.close();
-
-      res.statusCode = 200;
-      res.setHeader('Content-Type', 'text/plain');
-      res.send("god");
-    })
-  });
-});
-
 app.get("/getJSON", function(req, res){
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/plain');
@@ -54,21 +35,7 @@ app.post("/Data", function(req, res){
   }
 });
 
-app.post("/test", function(req, res){
-/*let users = {name: req.body.name, surname: req.body.surname, age: req.body.age};
-  const mongoClient = new MongoClient("mongodb://localhost:27017", {useNewUrlParser: true});
-  mongoClient.connect(function(err, client) {
-    const db = client.db("usersdb");
-    const collection = db.collection("users");
-
-    collection.insertOne(users, function(err, results){
-      console.log(results);
-      client.close();
-      res.send(results);
-      res.statusCode = 200;
-    })
-    client.close();
-  });*/
+app.get("/getMDB", function(req, res){
   const mongoClient = new MongoClient(urldb, {useNewUrlParser: true});
 
   mongoClient.connect(function(err, client){
@@ -76,11 +43,47 @@ app.post("/test", function(req, res){
     const collection = db.collection("users");
 
     collection.find().toArray(function(err, results) {
-      console.log(results);
+      console.log("Sended db data");
       res.send(results);
       client.close();
-    })
+    });
   });
+});
+
+app.post("/sendMDB", function(req, res){
+  const mongoClient = new MongoClient(urldb, {useNewUrlParser: true});
+  let users = [{name: "Sergei", surname: "Skoblin", age: 20},
+              {name: "Petr", surname: "Ivanov", age: 20}];
+  mongoClient.connect(function(err, client) {
+    const db = client.db("usersdb");
+    const collection = db.collection("users");
+
+    collection.insertMany(users, function(err, results){
+      console.log(results);
+      client.close();
+
+      res.statusCode = 200;
+      res.setHeader('Content-Type', 'text/plain');
+      res.send("god");
+    });
+  });
+});
+
+app.get("/registration", function(req, res) {
+  let users = {name: req.body.name, surname: req.body.surname, age: req.body.age};
+    const mongoClient = new MongoClient(urldb, {useNewUrlParser: true});
+    mongoClient.connect(function(err, client) {
+      const db = client.db("usersdb");
+      const collection = db.collection("users");
+
+      collection.insertOne(users, function(err, results){
+        console.log(results);
+        client.close();
+        res.send(results);
+        res.statusCode = 200;
+      })
+      client.close();
+    });
 });
 
 app.get("*", function(req, res){
