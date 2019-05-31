@@ -1,11 +1,11 @@
 table.registration{
   background: #FFFFAA;
-  position: fixed; top: 25%; left: 50%;
+  position: fixed; top: 28%; left: 50%;
   transform: translate(-50%, -50%);
 }
 table.test{
     background: #AAFFAA;
-    position: fixed; top: 38%; left: 50%;
+    position: fixed; top: 48%; left: 50%;
     transform: translate(-50%, -50%);
 }
 @font-face {

@@ -36,7 +36,7 @@ app.post("/Data", function(req, res){
   }
 });
 
-app.get("/getMDB", function(req, res){
+app.get("/getMDB", function(req, res){//for testing
   const mongoClient = new MongoClient(urldb, {useNewUrlParser: true});
 
   mongoClient.connect(function(err, client){
@@ -51,7 +51,7 @@ app.get("/getMDB", function(req, res){
   });
 });
 
-app.post("/sendMDB", function(req, res){
+app.post("/sendMDB", function(req, res){//for testing
   const mongoClient = new MongoClient(urldb, {useNewUrlParser: true});
   let users = [{name: "Sergei", surname: "Skoblin", age: 20},
               {name: "Petr", surname: "Ivanov", age: 20}];
@@ -78,7 +78,7 @@ app.post("/auth", function(req, res){
     const db = client.db(dbName);
     const collection = db.collection("users");
 
-    collection.find(userData).toArray(function(err, results){
+    collection.find(userData, function(err, results){
       console.log(`Authtorization: L: ${req.body.login} P: ${req.body.password}`);
       if(results != ""){
         res.send({"respons": true});
@@ -90,6 +90,31 @@ app.post("/auth", function(req, res){
         console.log(results);
       }
       client.close();
+    });
+  });
+});
+
+app.post("/reg", function(req, res) {
+  let user = {login: req.body.login, password: req.body.password};
+  const mongoClient = new MongoClient(urldb, {useNewUrlParser: true});
+
+  mongoClient.connect(function(err, client){
+    const db = client.db(dbName);
+    const collection = db.collection("users");
+
+    collection.findOne({login: req.body.login}, function(err, results){
+      if(results == null){
+        collection.insertOne(user, function(err, results){
+          res.send(true);
+          res.statusCode = 200;
+          console.log(`Reg'd: l:${req.body.login} p:${res.body.password}`);
+        });
+      }
+      else{
+        res.send(false);
+        res.statusCode = 301;
+        console.log("Error: This user is registered.");
+      }
     });
   });
 });
