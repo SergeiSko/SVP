@@ -5,6 +5,7 @@ const express = require('express');
 const app = express();
       port = 3000;
       urldb = "mongodb://localhost:27017";
+      dbName = "usersdb";
 
 app.use(express.static(__dirname + '/public'));
 app.use(parser.json());
@@ -39,7 +40,7 @@ app.get("/getMDB", function(req, res){
   const mongoClient = new MongoClient(urldb, {useNewUrlParser: true});
 
   mongoClient.connect(function(err, client){
-    const db = client.db("usersdb");
+    const db = client.db(dbName);
     const collection = db.collection("users");
 
     collection.find().toArray(function(err, results) {
@@ -55,7 +56,7 @@ app.post("/sendMDB", function(req, res){
   let users = [{name: "Sergei", surname: "Skoblin", age: 20},
               {name: "Petr", surname: "Ivanov", age: 20}];
   mongoClient.connect(function(err, client) {
-    const db = client.db("usersdb");
+    const db = client.db(dbName);
     const collection = db.collection("users");
 
     collection.insertMany(users, function(err, results){
@@ -69,22 +70,56 @@ app.post("/sendMDB", function(req, res){
   });
 });
 
-app.post("/registration", function(req, res) {
-  let users = {name: req.body.name, surname: req.body.surname, age: req.body.age};
-    const mongoClient = new MongoClient(urldb, {useNewUrlParser: true});
-    mongoClient.connect(function(err, client) {
-      const db = client.db("usersdb");
-      const collection = db.collection("users");
+app.post("/auth", function(req, res){
+  let userData = {"login": req.body.login, "password": req.body.password};
+  const mongoClient = new MongoClient(urldb, {useNewUrlParser: true});
+  console.log(userData);
+  mongoClient.connect(function(err, client){
+    const db = client.db(dbName);
+    const collection = db.collection("users");
 
-      collection.insertOne(users, function(err, results){
-        console.log("Sended db data(registration)");
-        client.close();
-        res.send(results);
+    collection.find(userData).toArray(function(err, results){
+      console.log(`Authtorization: L: ${req.body.login} P: ${req.body.password}`);
+      if(results != ""){
+        res.send({"respons": true});
         res.statusCode = 200;
-      })
+      }
+      else{
+        res.send({"respons":false});
+        res.statusCode = 303;
+        console.log(results);
+      }
       client.close();
     });
+  });
 });
+
+app.post("/registration", function(req, res) {
+  let users = {name: req.body.name, surname: req.body.surname, age: req.body.age};
+  const mongoClient = new MongoClient(urldb, {useNewUrlParser: true});
+
+  mongoClient.connect(function(err, client) {
+    const db = client.db(dbName);
+    const collection = db.collection("users");
+
+    collection.insertOne(users, function(err, results){
+      console.log("Sended db data(registration)");
+      res.send(results);
+      res.statusCode = 200;
+      client.close();
+    })
+    client.close();
+  });
+});
+
+/*app.post("/checkUser", function(req, res) {
+  const mongoClient = new MongoClient(urldb, {useNewUrlParser: true});
+  mongoClient.connect(function(err,client){
+    const db = client.db(dbName);
+    const collection = db.collection("users");
+
+  });
+});*/
 
 app.get("*", function(req, res){
   res.statusCode = 404;
