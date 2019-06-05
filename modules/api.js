@@ -12,7 +12,7 @@ module.exports = function(app, mongoClient){
 
       collection.findOne(userData, function(err, results){
         if(results != null){
-          res.send({"respons": true});
+          res.send(true);
           res.statusCode = 200;
         }
         else{
