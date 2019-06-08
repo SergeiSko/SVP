@@ -14,11 +14,11 @@ app.use(cookieParser());
 require('./modules/tests.js')(app, mongoClient);
 require('./modules/api.js')(app, mongoClient);
 
-app.get("/*", function(req, res){
+/*app.get("/*", function(req, res){
   res.statusCode = 404;
   res.setHeader('Content-Type', 'text/plain');
   res.send('not found(my)');
-});
+});*/
 
 app.listen(port, (err) => {
   if(err){
