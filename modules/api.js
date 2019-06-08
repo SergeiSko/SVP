@@ -1,8 +1,6 @@
 module.exports = function(app, mongoClient){
   dbName = "usersdb";
 
-
-
   app.post("/auth", function(req, res){
     let userData = {"login": req.body.login, "password": req.body.password};
     console.log(userData);
@@ -12,11 +10,11 @@ module.exports = function(app, mongoClient){
 
       collection.findOne(userData, function(err, results){
         if(results != null){
-          res.send(true);
+          res.send(`{"respons": true}`);
           res.statusCode = 200;
         }
         else{
-          res.send({"respons":false});
+          res.send(`{"respons":false}`);
           res.statusCode = 303;
           console.log(`Authtorization: U: ${userData}`);
           console.log(results);
@@ -36,7 +34,7 @@ module.exports = function(app, mongoClient){
       collection.findOne({login: req.body.login}, function(err, results){
         if(results == null){
           collection.insertOne(user, function(err, results){
-            res.send(true);
+            res.send(`{"respons": true}`);
             res.statusCode = 200;
             console.log(`Reg'd: l:${req.body.login} p:${res.body.password}`);
           });
