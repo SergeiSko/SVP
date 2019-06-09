@@ -38,6 +38,7 @@ app.listen(port, (err) => {
         collection.insertMany(tesks, function(err, results){
           if (err) {return console.log("Server error\nError connect to addTesks\n(/reg): " + err);}
           console.log("Tesks added.");
+          console.log(results);
         });
       });
       collection = db.collection("users");

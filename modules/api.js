@@ -57,14 +57,14 @@ module.exports = function(app, mongoClient){
 
   app.get("/getTesks", function(req, res) {
     mongoClient.connect(function(err,client){
-      if (error) {return console.log("Api error\nError connect to MDB\n(/getTesks): " + error);}
+      if (err) {return console.log("Api error\nError connect to MDB\n(/getTesks): " + err);}
       const db = client.db(dbName);
       const collection = db.collection("Tesks");
       collection.find().toArray(function(err, results){
-        if (error) {return console.log("Api error\nError find.toArray\n(/getTesks): " + error);}
+        if (err) {return console.log("Api error\nError find.toArray\n(/getTesks): " + err);}
         res.setHeader('Content-Type', 'application/json');
         res.statusCode = 201;
-        res.send(results);
+        res.send("кук");
         client.close();
       });
     });
