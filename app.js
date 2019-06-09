@@ -14,28 +14,41 @@ app.use(cookieParser());
 require('./modules/tests.js')(app, mongoClient);
 require('./modules/api.js')(app, mongoClient);
 
-/*app.get("/*", function(req, res){
+app.get("/*", function(req, res){
   res.statusCode = 404;
   res.setHeader('Content-Type', 'text/plain');
   res.send('not found(my)');
-});*/
+});
 
 app.listen(port, (err) => {
   if(err){
-    return console.error(`Server error: ${err}`);
+    return console.error(`On ${err.stack()}\nServer error: ${err}`);
   }
   else {
-    const tesks = {}
+    const tesks = require('./tesks');
+    const users = require('./users');
     console.log(`Listening: ${port} port.`);
     mongoClient.connect(function(err, client){
+      if (error) {return console.log("Server error\nError connect to MDB\n(/reg): " + error);}
       const db = client.db(dbName);
-      const collection = db.collection("Tesks");
+      let collection = db.collection("Tesks");
       collection.remove({}, function(err, results){
+        if (error) {return console.log("Server error\nError connect to removeTesks\n(/reg): " + error);}
         console.log("Tesks removed.");
         collection.insertMany(tesks, function(err, results){
+          if (error) {return console.log("Server error\nError connect to addTesks\n(/reg): " + error);}
           console.log("Tesks added.");
         });
       });
+      collection = db.collection("users");
+      collection.remove({}, function(err, results) {
+        if (error) {return console.log("Server error\nError connect to addUsers\n(/reg): " + error);}
+        console.log("Users removed.");
+        collection.insertMany(users, function(err, results) {
+          if (error) {return console.log("Server error\nError connect to removeUsers\n(/reg): " + error);}
+          console.log("Users added.");
+        })
+      })
     });
   }
 });
