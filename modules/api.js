@@ -11,10 +11,12 @@ module.exports = function(app, mongoClient){
       collection.findOne(userData, function(err, results){
         if(results != null){
           console.log("post findOne: results=null");
+          res.setHeader('Content-Type', 'text/plain');
           res.send(`{"respons": true}`);
           res.statusCode = 200;
         }
         else{
+          res.setHeader('Content-Type', 'text/plain');
           res.send(`{"respons":false}`);
           res.statusCode = 303;
           console.log(`Authtorization: U: ${userData}`);
@@ -36,13 +38,14 @@ module.exports = function(app, mongoClient){
         if (error) {return console.log("Api error\nError findOne\n(/reg): " + error);}
         if(results == null){
           collection.insertOne(user, function(err, results){
+            res.setHeader('Content-Type', 'text/plain');
             res.send(`{"respons": true}`);
             res.statusCode = 200;
             console.log(`Reg'd: l:${req.body.login} p:${res.body.password}`);
           });
         }
         else{
-          res.send(false);
+          res.send(`{"respons":false}`);
           res.statusCode = 301;
           console.log("Error: This user is registered.");
         }
