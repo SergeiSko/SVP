@@ -64,7 +64,7 @@ module.exports = function(app, mongoClient){
         if (err) {return console.log("Api error\nError find.toArray\n(/getTesks): " + err);}
         res.setHeader('Content-Type', 'application/json');
         res.statusCode = 201;
-        res.send("кук");
+        res.send(results);
         client.close();
       });
     });
