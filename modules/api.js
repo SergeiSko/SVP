@@ -88,8 +88,8 @@ module.exports = function(app, mongoClient){
         {return console.log("Api error: " + err);}
         res.statusCode = 201;
         res.send("inserted");
-        client.close();
       });
+      client.close();
     });
   });
 }

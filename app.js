@@ -31,22 +31,23 @@ app.listen(port, (err) => {
     mongoClient.connect(function(err, client){
       if (err) {return console.log("Server error\nError connect to MDB\n(/reg): " + err);}
       const db = client.db(dbName);
-      let collection = db.collection("Tesks");
-      collection.remove({}, function(err, results){
+      const collectionTesks = db.collection("Tesks");
+      collectionTesks.remove({}, function(err, results){
         if (err) {return console.log("Server error\nError connect to removeTesks\n(/reg): " + err);}
-        console.log("Tesks removed.");
-        collection.insertMany(tesks, function(err, results){
+        else console.log("Tesks removed.");
+        collectionTesks.insertMany(tesks, function(err, results){
           if (err) {return console.log("Server error\nError connect to addTesks\n(/reg): " + err);}
-          console.log("Tesks added.");
-          console.log(results);
+          else {
+            console.log("Tesks added.");
+          }
         });
       });
-      collection = db.collection("users");
-      collection.remove({}, function(err, results) {
-        if (err) {return console.log("Server error\nError connect to addUsers\n(/reg): " + err);}
+      const collectionUsers = db.collection("users");
+      collectionUsers.remove({}, function(err, results) {
+        if (err) {return console.log("Server error\nError connect to addUsers: " + err);}
         console.log("Users removed.");
-        collection.insertMany(users, function(err, results) {
-          if (err) {return console.log("Server error\nError connect to removeUsers\n(/reg): " + err);}
+        collectionUsers.insertMany(users, function(err, results) {
+          if (err) {return console.log("Server error\nError connect to removeUsers: " + err);}
           console.log("Users added.");
         })
       })
