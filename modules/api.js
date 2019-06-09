@@ -11,12 +11,12 @@ module.exports = function(app, mongoClient){
       collection.findOne(userData, function(err, results){
         if(results != null){
           console.log("post findOne: results=null");
-          res.setHeader('Content-Type', 'text/plain');
+          res.setHeader('Content-Type', 'application/json');
           res.send(`{"respons": true}`);
           res.statusCode = 200;
         }
         else{
-          res.setHeader('Content-Type', 'text/plain');
+          res.setHeader('Content-Type', 'application/json');
           res.send(`{"respons":false}`);
           res.statusCode = 303;
           console.log(`Authtorization: U: ${userData}`);
@@ -39,14 +39,14 @@ module.exports = function(app, mongoClient){
         if(results == null){
           collection.insertOne(user, function(err, results){
             return console.log(`Api\n/req\ninsertOne(users) ${err}`);
-            res.setHeader('Content-Type', 'text/plain');
+            res.setHeader('Content-Type', 'application/json');
             res.send(`{"respons": true}`);
             res.statusCode = 200;
             console.log(`Reg'd: l:${req.body.login} p:${res.body.password}`);
           });
         }
         else{
-          res.send(`{"respons":false}`);
+          res.setHeader('Content-Type', 'application/json');
           res.send(`{"respons":false}`);
           res.statusCode = 301;
           console.log("Error: This user is registered.");
@@ -62,6 +62,7 @@ module.exports = function(app, mongoClient){
       const collection = db.collection("Tesks");
       collection.find().toArray(function(err, results){
         if (error) {return console.log("Api error\nError find.toArray\n(/getTesks): " + error);}
+        res.setHeader('Content-Type', 'application/json');
         res.statusCode = 201;
         res.send(results);
         client.close();
