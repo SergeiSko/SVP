@@ -31,13 +31,14 @@ module.exports = function(app, mongoClient){
     let user = {login: req.body.login, password: req.body.password};
 
     mongoClient.connect(function(err, client){
-      if (error) {return console.log(`Api error\nError connect to MDB\n(/reg): ${error.stack}"`);}
+      if (err) {return console.log(`Api error\nError connect to MDB\n(/reg): ${err}"`);}
       const db = client.db(dbName);
       const collection = db.collection("users");
       collection.findOne({login: req.body.login}, function(err, results){
-        if (error) {return console.log("Api error\nError findOne\n(/reg): " + error);}
+        if (err) {return console.log("Api error\nError findOne\n(/reg): " + err);}
         if(results == null){
           collection.insertOne(user, function(err, results){
+            return console.log(`Api\n/req\ninsertOne(users) ${err}`);
             res.setHeader('Content-Type', 'text/plain');
             res.send(`{"respons": true}`);
             res.statusCode = 200;
@@ -45,6 +46,7 @@ module.exports = function(app, mongoClient){
           });
         }
         else{
+          res.send(`{"respons":false}`);
           res.send(`{"respons":false}`);
           res.statusCode = 301;
           console.log("Error: This user is registered.");
