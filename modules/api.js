@@ -55,13 +55,13 @@ module.exports = function(app, mongoClient){
     });
   });
 
-  app.get("/getTesks", function(req, res) {
+  app.get("/getTasks", function(req, res) {
     mongoClient.connect(function(err,client){
-      if (err) {return console.log("Api error\nError connect to MDB\n(/getTesks): " + err);}
+      if (err) {return console.log("Api error\nError connect to MDB\n(/getTasks): " + err);}
       const db = client.db(dbName);
-      const collection = db.collection("Tesks");
+      const collection = db.collection("tasks");
       collection.find().toArray(function(err, results){
-        if (err) {return console.log("Api error\nError find.toArray\n(/getTesks): " + err);}
+        if (err) {return console.log("Api error\nError find.toArray\n(/getTasks): " + err);}
         res.setHeader('Content-Type', 'application/json');
         res.statusCode = 201;
         res.send(results);
@@ -70,19 +70,19 @@ module.exports = function(app, mongoClient){
     });
   });
 
-  app.post("/insertTesks", function(req, res){
+  app.post("/insertTasks", function(req, res){
     mongoClient.connect(function(err, client) {
-      if (error) {return console.log("Api error\nError connect to MDB\n(/insertTesks): " + error);}
+      if (error) {return console.log("Api error\nError connect to MDB\n(/insertTasks): " + error);}
       const db = client.db(dbName);
-      db.collection("Tesks").count({}, function(error, num) {
-        if (error) {return console.log("Api error(/insertTesks): " + error);}
+      db.collection("Tasks").count({}, function(error, num) {
+        if (error) {return console.log("Api error(/insertTasks): " + error);}
         console.log(num);
       })
 
     })
     mongoClient.connect(function(err, client){
       const db = client.db(dbName);
-      const collection = db.collection("Tesks");
+      const collection = db.collection("Tasks");
       collection.insert(req.body, function(err, results){
         if(err)
         {return console.log("Api error: " + err);}
