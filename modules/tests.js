@@ -2,12 +2,6 @@ module.exports = function(app, mongoClient){
   const dbName = "usersdb";
 
 
-  
-  app.get("/", function(req, res){
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
-    res.send('public/index.html');
-  });
 
   app.get("/getJSON", function(req, res){
     res.statusCode = 200;
