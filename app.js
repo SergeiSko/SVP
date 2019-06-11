@@ -13,7 +13,7 @@ app.use(cookieParser());
 
 require('./modules/tests.js')(app, mongoClient);
 require('./modules/api.js')(app, mongoClient);
-
+require('./routes/routes.js')(app, mongoClient);
 
 
 app.listen(port, (err) => {
@@ -38,7 +38,7 @@ app.listen(port, (err) => {
           }
         });
       });
-      const collectionUsers = db.collection("users");
+      const collectionUsers = db.collection("Users");
       collectionUsers.remove({}, function(err, results) {
         if (err) {return console.log("Server error\nError connect to addUsers: " + err);}
         console.log("Users removed.");

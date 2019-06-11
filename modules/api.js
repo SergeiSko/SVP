@@ -6,7 +6,7 @@ module.exports = function(app, mongoClient){
     console.log(userData);
     mongoClient.connect(function(err, client){
       const db = client.db(dbName);
-      const collection = db.collection("users");
+      const collection = db.collection("Users");
 
       collection.findOne(userData, function(err, results){
         if(results != null){
@@ -33,7 +33,7 @@ module.exports = function(app, mongoClient){
     mongoClient.connect(function(err, client){
       if (err) {return console.log(`Api error\nError connect to MDB\n(/reg): ${err}"`);}
       const db = client.db(dbName);
-      const collection = db.collection("users");
+      const collection = db.collection("Users");
       collection.findOne({login: req.body.login}, function(err, results){
         if (err) {return console.log("Api error\nError findOne\n(/reg): " + err);}
         if(results == null){
@@ -59,7 +59,7 @@ module.exports = function(app, mongoClient){
     mongoClient.connect(function(err,client){
       if (err) {return console.log("Api error\nError connect to MDB\n(/getTasks): " + err);}
       const db = client.db(dbName);
-      const collection = db.collection("tasks");
+      const collection = db.collection("Tasks");
       collection.find().toArray(function(err, results){
         if (err) {return console.log("Api error\nError find.toArray\n(/getTasks): " + err);}
         res.setHeader('Content-Type', 'application/json');
