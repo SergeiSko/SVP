@@ -93,7 +93,11 @@ module.exports = function(app, mongoClient){
     });
   });
   app.post("/deleteTasks", function(req, res){
-  //  mongoClient
+    mongoClient.connect(function(){
+      const db = client.db(dbName);
+      const collection = db.collection("Tesks");
+      collection.update({"_id" : req.body._id}, {name: "Tom", age : 25}, {upsert: true})
+    })
 
   });
 }

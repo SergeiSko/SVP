@@ -28,6 +28,7 @@ module.exports = function(mongoClient) {
           else {
             console.log("Tasks added.");
             checks[0] = 1;
+            checks();
           }
         });
       });
@@ -47,6 +48,7 @@ module.exports = function(mongoClient) {
           if (err) {return console.log("Server error\nError connect to addUsers: " + err);}
           console.log("Users added.");
           checks[1] = 1;
+          checks();
         })
       });
     }
@@ -64,6 +66,7 @@ module.exports = function(mongoClient) {
           if (err) {return console.log("Server error\nError connect to addState: " + err);}
           console.log("State added.");
           checks[2] = 1;
+          checks();
         })
       });
     }
@@ -82,10 +85,13 @@ module.exports = function(mongoClient) {
             if (err) {return console.log("Server error\nError connect to addActor: " + err);}
             console.log("Actor added.");
             checks[3] = 1;
+            checks();
           })
         });
     }
+    function checks(){
+      if(checks[3] == 1 && checks[2] == 1 && checks[1] == 1 && checks[0] == 1)
+      {console.log("Server running without problems!!!");}
+    }
   });
-  if(checks[0] == 1 && checks[1] == 1 && checks[2] == 1 && checks[3] == 1)
-  console.log("Server running without problems!!!");
 }
