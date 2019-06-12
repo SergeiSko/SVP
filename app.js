@@ -22,6 +22,6 @@ app.listen(port, (err) => {
   }
   else {
     console.log(`Listening: ${port} port.`);
-    require("./modules.prepare")(mongoClient);
+    require('./modules/prepare.js')(mongoClient);
   }
 });
