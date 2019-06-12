@@ -92,4 +92,8 @@ module.exports = function(app, mongoClient){
       client.close();
     });
   });
+  app.post("/deleteTasks", function(req, res){
+  //  mongoClient
+
+  });
 }

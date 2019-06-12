@@ -1,5 +1,6 @@
 module.exports = function(mongoClient) {
   dbName = "usersdb";
+  var checks = [0, 0, 0, 0];
   const tasks = require('../Data/tasks');
   const users = require('../Data/users');
   const state = require('../Data/state');
@@ -26,6 +27,7 @@ module.exports = function(mongoClient) {
           if (err) {return console.log("Server error\nError connect to addTasks\n(/reg): " + err);}
           else {
             console.log("Tasks added.");
+            checks[0] = 1;
           }
         });
       });
@@ -44,6 +46,7 @@ module.exports = function(mongoClient) {
         collectionUsers.insertMany(users, function(err, results) {
           if (err) {return console.log("Server error\nError connect to addUsers: " + err);}
           console.log("Users added.");
+          checks[1] = 1;
         })
       });
     }
@@ -58,8 +61,9 @@ module.exports = function(mongoClient) {
         //Adding first state
 
         collectionState.insertMany(state, function(err, results) {
-          if (err) {return console.log("Server error\nError connect to addUsers: " + err);}
+          if (err) {return console.log("Server error\nError connect to addState: " + err);}
           console.log("State added.");
+          checks[2] = 1;
         })
       });
     }
@@ -71,13 +75,17 @@ module.exports = function(mongoClient) {
         collectionActor.remove({}, function(err, results){
           if (err) {return console.log("Server error\nError connect to removeActor: " + err);}
           console.log("Actor removed.");
+
           //Adding first state
 
           collectionActor.insertMany(actor, function(err, results) {
             if (err) {return console.log("Server error\nError connect to addActor: " + err);}
             console.log("Actor added.");
+            checks[3] = 1;
           })
         });
     }
   });
+  if(checks[0] == 1 && checks[1] == 1 && checks[2] == 1 && checks[3] == 1)
+  console.log("Server running without problems!!!");
 }

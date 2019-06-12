@@ -3,6 +3,7 @@ const express = require('express');
       MongoClient = require('mongodb').MongoClient;
       mongoClient = new MongoClient("mongodb://localhost:27017", {useNewUrlParser: true});
       cookieParser = require('cookie-parser');
+      //date = new Date();
 const app = express();
       port = 3000;
 
