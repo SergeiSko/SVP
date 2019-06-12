@@ -101,9 +101,10 @@ module.exports = function(app, mongoClient){
         {$set: {"state": req.body.stateId}},
         {upsert: fulse},
         function(err, results){
-        if (err) {return console.log("Api error\nError connect to MDB\n(/updateTasks): " + err);}}
-        console.log(results);
-      )
+          if (err) {return console.log("Api error\nError connect to MDB\n(/updateTasks): " + err);}
+          console.log(results);
+        }
+      );
     });
   });
   app.post("/deleteTasks", function(req, res){
