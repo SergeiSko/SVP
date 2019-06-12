@@ -72,14 +72,14 @@ module.exports = function(app, mongoClient){
 
   app.post("/insertTasks", function(req, res){
     mongoClient.connect(function(err, client) {
-      if (error) {return console.log("Api error\nError connect to MDB\n(/insertTasks): " + error);}
+      if (err) {return console.log("Api error\nError connect to MDB\n(/insertTasks): " + err);}
       const db = client.db(dbName);
       db.collection("Tasks").count({}, function(error, num) {
         if (error) {return console.log("Api error(/insertTasks): " + error);}
         console.log(num);
-      })
+      });
 
-    })
+    });
     mongoClient.connect(function(err, client){
       const db = client.db(dbName);
       const collection = db.collection("Tasks");
@@ -92,12 +92,31 @@ module.exports = function(app, mongoClient){
       client.close();
     });
   });
-  app.post("/deleteTasks", function(req, res){
-    mongoClient.connect(function(){
+  app.post("/updateTasks", function(req, res){
+    mongoClient.connect(function(err, client){
       const db = client.db(dbName);
-      const collection = db.collection("Tesks");
-      collection.update({"_id" : req.body._id}, {name: "Tom", age : 25}, {upsert: true})
-    })
-
+      const collection = db.collection("Tasks");
+      collection.update(
+        {"_id": req.body._id},
+        {$set: {"state": req.body.stateId}},
+        {upsert: fulse},
+        function(err, results){
+        if (err) {return console.log("Api error\nError connect to MDB\n(/updateTasks): " + err);}}
+        console.log(results);
+      )
+    });
+  });
+  app.post("/deleteTasks", function(req, res){
+    mongoClient.connect(function(err, client){
+      const db = client.db(dbName);
+      const collection = db.collection("Tasks")
+      collection.remove({"_id": req.body._id}, function(err, results) {
+        if (err) {return console.log("Api error\n(/deleteTasks): " + err);}
+        console.log(results);
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.send(results);
+      });
+    });
   });
 }
