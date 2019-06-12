@@ -21,32 +21,7 @@ app.listen(port, (err) => {
     return console.error(`On ${err.stack()}\nServer error: ${err}`);
   }
   else {
-    const tasks = require('./tasks');
-    const users = require('./users');
     console.log(`Listening: ${port} port.`);
-    mongoClient.connect(function(err, client){
-      if (err) {return console.log("Server error\nError connect to MDB\n(/reg): " + err);}
-      const db = client.db(dbName);
-      const collectionTasks = db.collection("Tasks");
-      collectionTasks.remove({}, function(err, results){
-        if (err) {return console.log("Server error\nError connect to removeTasks\n(/reg): " + err);}
-        else console.log("Tasks removed.");
-        collectionTasks.insertMany(tasks, function(err, results){
-          if (err) {return console.log("Server error\nError connect to addTasks\n(/reg): " + err);}
-          else {
-            console.log("Tasks added.");
-          }
-        });
-      });
-      const collectionUsers = db.collection("Users");
-      collectionUsers.remove({}, function(err, results) {
-        if (err) {return console.log("Server error\nError connect to addUsers: " + err);}
-        console.log("Users removed.");
-        collectionUsers.insertMany(users, function(err, results) {
-          if (err) {return console.log("Server error\nError connect to removeUsers: " + err);}
-          console.log("Users added.");
-        })
-      })
-    });
+    require("./modules.prepare")(mongoClient);
   }
 });
