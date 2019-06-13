@@ -99,7 +99,7 @@ module.exports = function(app, mongoClient){
       collection.update(
         {"_id": req.body._id},
         {$set: {"state": req.body.stateId}},
-        {upsert: fulse},
+        {upsert: false},
         function(err, results){
           if (err) {return console.log("Api error\nError connect to MDB\n(/updateTasks): " + err);}
           console.log(results);
