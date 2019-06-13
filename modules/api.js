@@ -12,12 +12,12 @@ module.exports = function(app, mongoClient){
         if(results != null){
           console.log("post findOne: results=null");
           res.setHeader('Content-Type', 'application/json');
-          res.send(`{"respons": true}`);
+          res.send(`{"response": true}`);
           res.statusCode = 200;
         }
         else{
           res.setHeader('Content-Type', 'application/json');
-          res.send(`{"respons":false}`);
+          res.send(`{"response":false}`);
           res.statusCode = 303;
           console.log(`Authtorization: U: ${userData}`);
           console.log(results);
@@ -40,14 +40,14 @@ module.exports = function(app, mongoClient){
           collection.insertOne(user, function(err, results){
             return console.log(`Api\n/req\ninsertOne(users) ${err}`);
             res.setHeader('Content-Type', 'application/json');
-            res.send(`{"respons": true}`);
+            res.send(`{"response": true}`);
             res.statusCode = 200;
             console.log(`Reg'd: l:${req.body.login} p:${res.body.password}`);
           });
         }
         else{
           res.setHeader('Content-Type', 'application/json');
-          res.send(`{"respons":false}`);
+          res.send(`{"response":false}`);
           res.statusCode = 301;
           console.log("Error: This user is registered.");
         }

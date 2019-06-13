@@ -1,5 +1,5 @@
 [
-  {"_id": 0, "login": "Admin", "password": "Admin"},
-  {"_id": 1, "login": "Disp", "password": "Disp"},
-  {"_id": 2, "login": "Work", "password": "Work"}
+  {"_id": "0", "login": "Admin", "password": "Admin"},
+  {"_id": "1", "login": "Disp", "password": "Disp"},
+  {"_id": "2", "login": "Work", "password": "Work"}
 ]
