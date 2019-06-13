@@ -92,7 +92,7 @@ module.exports = function(app, mongoClient){
       client.close();
     });
   });
-  app.post("/updateTasks", function(req, res){
+  app.post("/updateTask", function(req, res){
     mongoClient.connect(function(err, client){
       const db = client.db(dbName);
       const collection = db.collection("Tasks");
