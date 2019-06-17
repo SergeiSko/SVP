@@ -1,16 +1,18 @@
 module.exports = function(mongoClient) {
   dbName = "usersdb";
-  var checks = [0, 0, 0, 0];
+  var checks = [0, 0, 0, 0, 0];
   const tasks = require('../Data/tasks');
   const users = require('../Data/users');
   const state = require('../Data/state');
   const actor = require('../Data/actor');
+  const uData = require('../Data/userData');
   mongoClient.connect(function(err, client){
     const db = client.db(dbName);
     AddTasks();
     AddUsers();
     AddState();
     AddActor();
+    AddUData();
     function AddTasks()
     {
       const collectionTasks = db.collection("Tasks");
@@ -60,6 +62,7 @@ module.exports = function(mongoClient) {
       collectionState.remove({}, function(err, results){
         if (err) {return console.log("Server error\nError connect to removeState: " + err);}
         console.log("State removed.");
+
         //Adding first state
 
         collectionState.insertMany(state, function(err, results) {
@@ -89,9 +92,34 @@ module.exports = function(mongoClient) {
           })
         });
     }
+
+    function AddUData(){
+      const collection = db.collection("userData");
+
+        //Cleaning userData list
+
+      collection.remove({}, function(err, results){
+        if (err) {return console.log("Server error\nError connect to removeUserData: " + err);}
+        console.log("UserData removed.");
+
+        //Adding first userData
+
+        collection.insertMany(actor, function(err, results) {
+          if (err) {return console.log("Server error\nError connect to addUserData: " + err);}
+          console.log("UserData added.");
+          checks[4] = 1;
+          checks();
+        })
+      });
+    }
     function checks(){
-      if(checks[3] == 1 && checks[2] == 1 && checks[1] == 1 && checks[0] == 1)
+      if(checks[4] == 1)
+      if(checks[3] == 1)
+      if(checks[2] == 1)
+      if(checks[1] == 1)
+      if(checks[0] == 1)
       {console.log("Server running without problems!!!");}
     }
   });
+
 }

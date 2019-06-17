@@ -1,31 +1,32 @@
 module.exports = function(app, mongoClient){
   dbName = "usersdb";
 
-  app.post("/auth", function(req, res){
-    let userData = {"login": req.body.login, "password": req.body.password};
-    console.log(userData);
-    mongoClient.connect(function(err, client){
-      const db = client.db(dbName);
-      const collection = db.collection("Users");
 
-      collection.findOne(userData, function(err, results){
-        if(results != null){
-          console.log("post findOne: results=null");
-          res.setHeader('Content-Type', 'application/json');
-          res.send(`{"response": true}`);
-          res.statusCode = 200;
-        }
-        else{
-          res.setHeader('Content-Type', 'application/json');
-          res.send(`{"response":false}`);
-          res.statusCode = 303;
-          console.log(`Authtorization: U: ${userData}`);
-          console.log(results);
-        }
-        client.close();
+    app.post("/auth", function(req, res){
+      let userData = {"login": req.body.login, "password": req.body.password};
+      console.log(userData);
+      mongoClient.connect(function(err, client){
+        const db = client.db(dbName);
+        const collection = db.collection("Users");
+
+        collection.findOne(userData, function(err, results){
+          if(results != null){
+            res.setHeader('Content-Type', 'application/json');
+            res.send(`{"response": true, "userId": "${results._id}"}`);
+            res.statusCode = 200;
+            console.log(`Authtorization: U: ${userData}`);
+            console.log(results);
+          }
+          else{
+            res.setHeader('Content-Type', 'application/json');
+            res.send(`{"response":false}`);
+            res.statusCode = 303;
+            console.log(`post findOne: results=null`);
+          }
+          client.close();
+        });
       });
     });
-  });
 
   app.post("/reg", function(req, res) {
     let user = {login: req.body.login, password: req.body.password};
