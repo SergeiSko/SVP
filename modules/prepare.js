@@ -1,125 +1,147 @@
+
+
 module.exports = function(mongoClient) {
+
   dbName = "usersdb";
-  var checks = [0, 0, 0, 0, 0];
   const tasks = require('../Data/tasks');
   const users = require('../Data/users');
   const state = require('../Data/state');
   const actor = require('../Data/actor');
   const uData = require('../Data/userData');
   mongoClient.connect(function(err, client){
+    if(err) return console.error(err);
     const db = client.db(dbName);
-    AddTasks();
-    AddUsers();
-    AddState();
-    AddActor();
-    AddUData();
-    function AddTasks()
-    {
-      const collectionTasks = db.collection("Tasks");
-
-      //Cleaning tasks list
-
-      collectionTasks.remove({}, function(err, results){
+    var checks = [0, 0, 0, 0, 0];
+    AddTasks(client, db);
+    AddUsers(client, db);
+    AddState(client, db);
+    AddActor(client, db);
+    AddUData(client, db);
+  });
+  function AddTasks(client, db)
+  {
+    const collection = db.collection("Tasks");
+    remove(collection);
+    add(collection);
+    function remove(collection){      //Cleaning tasks list
+      collection.remove({}, function(err, results){
         if (err) {return console.log("Server error\nError connect to removeTasks\n(/reg): " + err);}
         else console.log("Tasks removed.");
-
-        //Adding first tasks
-
-        collectionTasks.insertMany(tasks, function(err, results){
-          if (err) {return console.log("Server error\nError connect to addTasks\n(/reg): " + err);}
-          else {
-            console.log("Tasks added.");
-            checks[0] = 1;
-            checks();
-          }
-        });
+        checks[0] = 2;
       });
     }
-    function AddUsers(){
-      const collectionUsers = db.collection("Users");
-
-      //Cleaning users list
-
-      collectionUsers.remove({}, function(err, results) {
+    function add(collection){      //Adding first tasks
+      collection.insertMany(tasks, function(err, results){
+        if (err) return console.log("Server error\nError connect to addTasks\n(/reg): " + err);
+        else {
+          console.log("Tasks added.");
+          checks[0] = 1;
+          checks();
+        }
+      });
+    }
+  }
+  function AddUsers(client, db){
+    const collection = db.collection("Users");
+    remove();
+    add();
+    function remove(){    //Cleaning users list
+      collection.remove({}, function(err, results) {
         if (err) {return console.log("Server error\nError connect to removeUsers: " + err);}
         console.log("Users removed.");
-
-        //Adding first users
-
-        collectionUsers.insertMany(users, function(err, results) {
-          if (err) {return console.log("Server error\nError connect to addUsers: " + err);}
-          console.log("Users added.");
-          checks[1] = 1;
-          checks();
-        })
+        checks[1] = 2;
       });
     }
-    function AddState(){
-      const collectionState = db.collection("State");
+    function add(){      //Adding first users
+      collection.insertMany(users, function(err, results) {
+        if (err) {return console.log("Server error\nError connect to addUsers: " + err);}
+        console.log("Users added.");
+        checks[1] = 1;
+        checks();
+      });
+    }
+  }
 
-      //Cleaning state list
+  function AddState(client, db){
+    const collection = db.collection("State");
+    remove();
+    add();
+    function remove(){      //Cleaning state list
 
-      collectionState.remove({}, function(err, results){
+      collection.remove({}, function(err, results){
         if (err) {return console.log("Server error\nError connect to removeState: " + err);}
         console.log("State removed.");
-
-        //Adding first state
-
-        collectionState.insertMany(state, function(err, results) {
-          if (err) {return console.log("Server error\nError connect to addState: " + err);}
-          console.log("State added.");
-          checks[2] = 1;
-          checks();
-        })
+        checks[2] = 2;
       });
     }
-    function AddActor(){
-        const collectionActor = db.collection("Actor");
+    function add(){  //Adding first state
 
-        //Cleaning state list
-
-        collectionActor.remove({}, function(err, results){
-          if (err) {return console.log("Server error\nError connect to removeActor: " + err);}
-          console.log("Actor removed.");
-
-          //Adding first state
-
-          collectionActor.insertMany(actor, function(err, results) {
-            if (err) {return console.log("Server error\nError connect to addActor: " + err);}
-            console.log("Actor added.");
-            checks[3] = 1;
-            checks();
-          })
-        });
+      collection.insertMany(state, function(err, results) {
+        if (err) {return console.log("Server error\nError connect to addState: " + err);}
+        console.log("State added.");
+        checks[2] = 1;
+        checks();
+      });
+    }
+  }
+  function AddActor(client, db){
+    const collection = db.collection("Actor");
+    remove();
+    add();
+    function remove(){      //Cleaning state list
+      collection.remove({}, function(err, results){
+        if (err) {return console.log("Server error\nError connect to removeActor: " + err);}
+        console.log("Actor removed.");
+        checks[3] = 2;
+      });
     }
 
-    function AddUData(){
-      const collection = db.collection("userData");
+    function add(){     //Adding first state
+      collection.insertMany(actor, function(err, results) {
+        if (err) {return console.log("Server error\nError connect to addActor: " + err);}
+        console.log("Actor added.");
+        checks[3] = 1;
+        checks();
+      });
+    }
+  }
+  function AddUData(client, db){
+    const collection = db.collection("userData");
+    remove()
+    add()
 
-        //Cleaning userData list
-
+    function remove(){      //Cleaning userData list
       collection.remove({}, function(err, results){
         if (err) {return console.log("Server error\nError connect to removeUserData: " + err);}
         console.log("UserData removed.");
-
-        //Adding first userData
-
-        collection.insertMany(actor, function(err, results) {
-          if (err) {return console.log("Server error\nError connect to addUserData: " + err);}
-          console.log("UserData added.");
-          checks[4] = 1;
-          checks();
-        })
+        checks[4] = 2;
       });
     }
-    function checks(){
-      if(checks[4] == 1)
-      if(checks[3] == 1)
-      if(checks[2] == 1)
-      if(checks[1] == 1)
-      if(checks[0] == 1)
-      {console.log("Server running without problems!!!");}
+    function add(){     //Adding first userData
+      collection.insertMany(actor, function(err, results) {
+        if (err) {return console.log("Server error\nError connect to addUserData: " + err);}
+        console.log("UserData added.");
+        checks[4] = 1;
+        checks();
+      });
     }
-  });
-
+  }
+  function checks(){
+    if(checks[4] == 1)
+    if(checks[3] == 1)
+    if(checks[2] == 1)
+    if(checks[1] == 1)
+    if(checks[0] == 1)
+    console.log("Server running without problems!!!");
+    else if(checks[0] == 2)
+    console.log("Error in AddTasks");
+    else if(checks[1] == 2)
+    console.log("Error in AddUsers");
+    else if(checks[2] == 2)
+    console.log("Error in AddState");
+    else if(checks[3] == 2)
+    console.log("Error in AddActor");
+    else if(checks[4] == 2)
+    console.log("Error in AddUData");
+  }
 }
