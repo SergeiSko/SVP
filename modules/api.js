@@ -12,7 +12,7 @@ module.exports = function(app, mongoClient){
         collection.findOne(userData, function(err, results){
           if(results != null){
             res.setHeader('Content-Type', 'application/json');
-            res.send(`{"response": true, "userId": "${results._id}"}`);
+            res.send(`{"response": true, "userId": "${results._id}", "userTypy": "${results.actor}"}`);
             res.statusCode = 200;
             console.log(`Authtorization: U: ${userData}`);
             console.log(results);
@@ -72,6 +72,7 @@ module.exports = function(app, mongoClient){
   });
 
   app.post("/insertTasks", function(req, res){
+    //var newTask = {};
     mongoClient.connect(function(err, client) {
       if (err) {return console.log("Api error\nError connect to MDB\n(/insertTasks): " + err);}
       const db = client.db(dbName);
@@ -120,5 +121,10 @@ module.exports = function(app, mongoClient){
         res.send(results);
       });
     });
+  });
+  app.post("/support", function(req, res){
+    res.setHeader('Content-Type', 'text/plain');
+    res.statusCode = 200;
+    res.send("Good");
   });
 }
