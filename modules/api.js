@@ -12,7 +12,7 @@ module.exports = function(app, mongoClient){
         collection.findOne(userData, function(err, results){
           if(results != null){
             res.setHeader('Content-Type', 'application/json');
-            res.send(`{"response": true, "userId": "${results._id}", "userTypy": "${results.actor}"}`);
+            res.send(`{"response": true, "userId": "${results._id}", "userType": "${results.actor}"}`);
             res.statusCode = 200;
             console.log(`Authtorization: U: ${userData}`);
             console.log(results);
@@ -121,10 +121,5 @@ module.exports = function(app, mongoClient){
         res.send(results);
       });
     });
-  });
-  app.post("/support", function(req, res){
-    res.setHeader('Content-Type', 'text/plain');
-    res.statusCode = 200;
-    res.send("Good");
   });
 }
