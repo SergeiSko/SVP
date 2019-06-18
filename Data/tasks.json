@@ -1,8 +1,8 @@
 [
-{"_id": "0", "task": "Задача 1", "dispatcher": "0", "worker": "1", "state": "0"},
-{"_id": "1", "task": "Задача 2", "dispatcher": "0", "worker": "1", "state": "2"},
-{"_id": "2", "task": "Задача 3", "dispatcher": "0", "worker": "1", "state": "1"},
-{"_id": "3", "task": "Задача 4", "dispatcher": "0", "worker": "1", "state": "1"},
-{"_id": "4", "task": "Задача 5", "dispatcher": "0", "worker": "1", "state": "1"},
-{"_id": "5", "task": "Задача 6", "dispatcher": "0", "worker": "1", "state": "1"}
+{"_id": "0", "task": "Задача 1", "dispatcher": "0", "worker": "2", "state": "0"},
+{"_id": "1", "task": "Задача 2", "dispatcher": "0", "worker": "2", "state": "2"},
+{"_id": "2", "task": "Задача 3", "dispatcher": "0", "worker": "2", "state": "1"},
+{"_id": "3", "task": "Задача 4", "dispatcher": "0", "worker": "2", "state": "1"},
+{"_id": "4", "task": "Задача 5", "dispatcher": "0", "worker": "2", "state": "1"},
+{"_id": "5", "task": "Задача 6", "dispatcher": "0", "worker": "2", "state": "1"}
 ]
