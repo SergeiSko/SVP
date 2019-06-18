@@ -122,4 +122,19 @@ module.exports = function(app, mongoClient){
       });
     });
   });
+  app.get("/getUsers", function(req, res){
+    mongoClient.connect(function(err,client){
+      if (err) {return console.log("Api error\nError connect to MDB\n(/getUsers): " + err);}
+      const db = client.db(dbName);
+      const collection = db.collection("Users");
+      collection.find().toArray(function(err, results){
+        if (err) {return console.log("Api error\nError find.toArray\n(/getUsers): " + err);}
+        res.setHeader('Content-Type', 'application/json');
+        res.statusCode = 201;
+        res.send(results);
+
+        client.close();
+      });
+    });
+  });
 }
