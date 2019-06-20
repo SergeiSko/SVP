@@ -34,13 +34,13 @@ module.exports = function(app, mongoClient){
       if (err) {return console.log("Api error\nError connect to MDB\n(/insertTasks): " + err);}
       const db = client.db(dbName);
       const collection = db.collection("Users");
-      db.collection("Users").count({}, function(error, num) { //Кол-во умеющихся юзеров
+      db.collection/*("Users")*/.count({}, function(error, num) { //Кол-во умеющихся юзеров
         if (error) {return console.log("Api error(/insertTasks): " + error);}
         collection.findOne({login: req.body.login}, function(err, results){  // Проверка наличия юзера в системе
           if (err) {return console.log("Api error\nError findOne\n(/reg): " + err);}
           if(results == null){
             //Добавление записи в таблицу Users
-            collection.insertOne({"_id": usersCuont, "login": req.body.login, "password": req.body.password, "actor": req.body.userType}, function(err, results){
+            collection.insertOne({"_id": usersCount, "login": req.body.login, "password": req.body.password, "actor": req.body.userType}, function(err, results){
               return console.error(` Error Api\n/req\ninsertOne(users) ${err}`);
               //Добавление записи в таблицу userData
               console.log(`count users: ${usersCount}`);
