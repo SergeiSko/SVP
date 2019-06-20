@@ -29,29 +29,39 @@ module.exports = function(app, mongoClient){
     });
 
   app.post("/reg", function(req, res) {
-    let user = {login: req.body.login, password: req.body.password};
-
+    var usersCount;
     mongoClient.connect(function(err, client){
-      if (err) {return console.log(`Api error\nError connect to MDB\n(/reg): ${err}"`);}
       const db = client.db(dbName);
       const collection = db.collection("Users");
-      collection.findOne({login: req.body.login}, function(err, results){
-        if (err) {return console.log("Api error\nError findOne\n(/reg): " + err);}
-        if(results == null){
-          collection.insertOne(user, function(err, results){
-            return console.log(`Api\n/req\ninsertOne(users) ${err}`);
+      if (err) {return console.log("Api error\nError connect to MDB\n(/insertTasks): " + err);}
+      db.collection("Tasks").count({}, function(error, num) {
+        if (error) {return console.log("Api error(/insertTasks): " + error);}
+        usersCount = num;
+        collection.findOne({login: req.body.login}, function(err, results){
+          if (err) {return console.log("Api error\nError findOne\n(/reg): " + err);}
+          if(results == null){
+            collection.insertOne(user, function(err, results){
+              var user = {_id: usersCuont,login: req.body.login, password: req.body.password, req.body.type};
+              return console.log(`Api\n/req\ninsertOne(users) ${err}`);
+              const collectionData = db.collection("userData");
+              var userData = {_id: usersCount, name: req.body.name, surname: req.body.surname, patronymic: req.body.patronymic, age: req.body.age};
+              collectionData.insertOne(userData, function(err, results){
+                return console.error(err);
+                // ----- response -----
+                res.setHeader('Content-Type', 'application/json');
+                res.send(`{"response": true}`);
+                res.statusCode = 200;
+                console.log(`Reg'd: l:${req.body.login} p:${res.body.password}`);
+              });
+            });
+          }
+          else{
             res.setHeader('Content-Type', 'application/json');
-            res.send(`{"response": true}`);
-            res.statusCode = 200;
-            console.log(`Reg'd: l:${req.body.login} p:${res.body.password}`);
-          });
-        }
-        else{
-          res.setHeader('Content-Type', 'application/json');
-          res.send(`{"response":false}`);
-          res.statusCode = 301;
-          console.log("Error: This user is registered.");
-        }
+            res.send(`{"response":false}`);
+            res.statusCode = 301;
+            console.log("Error: This user is registered.");
+          }
+        });
       });
     });
   });
