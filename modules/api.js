@@ -29,7 +29,7 @@ module.exports = function(app, mongoClient){
     });
 
   app.post("/reg", function(req, res) {
-    var usersCount;
+    let usersCount;
     mongoClient.connect(function(err, client){
       if (err) {return console.log("Api error\nError connect to MDB\n(/insertTasks): " + err);}
       const db = client.db(dbName);
@@ -42,8 +42,9 @@ module.exports = function(app, mongoClient){
             //Добавление записи в таблицу Users
             collection.insertOne({"_id": usersCuont, "login": req.body.login, "password": req.body.password, "actor": req.body.userType}, function(err, results){
               return console.error(` Error Api\n/req\ninsertOne(users) ${err}`);
-              const collectionData = db.collection("userData");
               //Добавление записи в таблицу userData
+              console.log(`count users: ${usersCount}`);
+              const collectionData = db.collection("userData");
               collectionData.insertOne({"_id": usersCount, "name": req.body.name, "surname": req.body.surname, "patronymic": req.body.patronymic, "age": req.body.age}, userData, function(err, results){
                 return console.error(err);
                 // ----- response -----

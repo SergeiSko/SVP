@@ -11,14 +11,13 @@ module.exports = function(mongoClient) {
     if(err) return console.error(err);
     const db = client.db(dbName);
     var checks = [0, 0, 0, 0, 0];
-    AddTasks(client, db);
-    AddUsers(client, db);
-    AddState(client, db);
-    AddActor(client, db);
-    AddUData(client, db);
+    AddTasks(db);
+    AddUsers(db);
+    AddState(db);
+    AddActor(db);
+    AddUData(db);
   });
-  function AddTasks(client, db)
-  {
+  function AddTasks(db){
     const collection = db.collection("Tasks");
     collection.remove({}, function(err, results){
       if (err) {return console.log("Server error\nError connect to removeTasks\n(/reg): " + err);}
@@ -34,7 +33,7 @@ module.exports = function(mongoClient) {
       }
     });
   }
-  function AddUsers(client, db){
+  function AddUsers(db){
     const collection = db.collection("Users");
     collection.remove({}, function(err, results) {
       if (err) {return console.log("Server error\nError connect to removeUsers: " + err);}
@@ -49,7 +48,7 @@ module.exports = function(mongoClient) {
     });
   }
 
-  function AddState(client, db){
+  function AddState(db){
     const collection = db.collection("State");
     collection.remove({}, function(err, results){
       if (err) {return console.log("Server error\nError connect to removeState: " + err);}
@@ -63,7 +62,7 @@ module.exports = function(mongoClient) {
       checks();
     });
   }
-  function AddActor(client, db){
+  function AddActor(db){
     const collection = db.collection("Actor");
     collection.remove({}, function(err, results){
       if (err) {return console.log("Server error\nError connect to removeActor: " + err);}
@@ -77,7 +76,7 @@ module.exports = function(mongoClient) {
       checks();
     });
   }
-  function AddUData(client, db){
+  function AddUData(db){
     const collection = db.collection("userData");
     collection.remove({}, function(err, results){
       if (err) {return console.log("Server error\nError connect to removeUserData: " + err);}
