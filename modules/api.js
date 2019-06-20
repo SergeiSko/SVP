@@ -41,7 +41,7 @@ module.exports = function(app, mongoClient){
           if (err) {return console.log("Api error\nError findOne\n(/reg): " + err);}
           if(results == null){
             collection.insertOne(user, function(err, results){
-              var user = {_id: usersCuont,login: req.body.login, password: req.body.password, req.body.type};
+              var user = {_id: usersCuont, login: req.body.login, password: req.body.password, type: req.body.type};
               return console.log(`Api\n/req\ninsertOne(users) ${err}`);
               const collectionData = db.collection("userData");
               var userData = {_id: usersCount, name: req.body.name, surname: req.body.surname, patronymic: req.body.patronymic, age: req.body.age};
