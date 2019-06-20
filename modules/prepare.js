@@ -1,7 +1,6 @@
 
 
 module.exports = function(mongoClient) {
-
   dbName = "usersdb";
   const tasks = require('../Data/tasks');
   const users = require('../Data/users');
@@ -85,7 +84,7 @@ module.exports = function(mongoClient) {
       console.log("UserData removed.");
       checks[4] = 2;
     });
-    collection.insertMany(actor, function(err, results) {
+    collection.insertMany(uData, function(err, results) {
       if (err) {return console.log("Server error\nError connect to addUserData: " + err);}
       console.log("UserData added.");
       checks[4] = 1;
@@ -99,7 +98,7 @@ module.exports = function(mongoClient) {
     if(checks[1] == 1)
     if(checks[0] == 1)
     console.log("Server running without problems!!!");
-    if(checks[0] == 2)
+    /*if(checks[0] == 2)
     console.log("Error in AddTasks");
     else if(checks[1] == 2)
     console.log("Error in AddUsers");
@@ -108,6 +107,6 @@ module.exports = function(mongoClient) {
     else if(checks[3] == 2)
     console.log("Error in AddActor");
     else if(checks[4] == 2)
-    console.log("Error in AddUData");
+    console.log("Error in AddUData");*/
   }
 }

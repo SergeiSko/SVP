@@ -34,19 +34,17 @@ module.exports = function(app, mongoClient){
       if (err) {return console.log("Api error\nError connect to MDB\n(/insertTasks): " + err);}
       const db = client.db(dbName);
       const collection = db.collection("Users");
-      db.collection("Tasks").count({}, function(error, num) {
-
+      db.collection("Users").count({}, function(error, num) { //Кол-во умеющихся юзеров
         if (error) {return console.log("Api error(/insertTasks): " + error);}
-        usersCount = num;
-        collection.findOne({login: req.body.login}, function(err, results){
+        collection.findOne({login: req.body.login}, function(err, results){  // Проверка наличия юзера в системе
           if (err) {return console.log("Api error\nError findOne\n(/reg): " + err);}
           if(results == null){
-            var user = {"_id": usersCuont, "login": req.body.login, "password": req.body.password, "actor": req.body.userType};
-            collection.insertOne(user, function(err, results){
+            //Добавление записи в таблицу Users
+            collection.insertOne({"_id": usersCuont, "login": req.body.login, "password": req.body.password, "actor": req.body.userType}, function(err, results){
               return console.error(` Error Api\n/req\ninsertOne(users) ${err}`);
               const collectionData = db.collection("userData");
-              var userData = {_id: usersCount, name: req.body.name, surname: req.body.surname, patronymic: req.body.patronymic, age: req.body.age};
-              collectionData.insertOne(userData, function(err, results){
+              //Добавление записи в таблицу userData
+              collectionData.insertOne({"_id": usersCount, "name": req.body.name, "surname": req.body.surname, "patronymic": req.body.patronymic, "age": req.body.age}, userData, function(err, results){
                 return console.error(err);
                 // ----- response -----
                 res.setHeader('Content-Type', 'application/json');
