@@ -51,15 +51,15 @@ module.exports = function(app, mongoClient){
                 res.setHeader('Content-Type', 'application/json');
                 res.send(`{"response": true}`);
                 res.statusCode = 200;
-                console.log(`Reg'd: l:${req.body.login} p:${res.body.password}`);
+                return console.log(`Reg'd: l:${req.body.login} p:${res.body.password}`);
               });
             });
           }
           else{
             res.setHeader('Content-Type', 'application/json');
-            res.send(`{"response":false}`);
+            res.send(`{"response": false}`);
             res.statusCode = 301;
-            console.log("Error: This user is registered.");
+            return console.log("Error: This user is registered.");
           }
         });
       });
