@@ -39,18 +39,18 @@ module.exports = function(app, mongoClient){
           if (err) {return console.log("Api error\nError findOne\n(/reg): " + err);}
           if(results == null){
             //Добавление записи в таблицу Users
-            collection.insertOne({"_id": num, "login": req.body.login, "password": req.body.password, "actor": req.body.userType}, function(err, results){
+            collection.insertOne({"_id": `${num}`, "login": req.body.login, "password": req.body.password, "actor": `${req.body.userType}`}, function(err, results){
               if(err) return console.error(` Error Api\n/req\ninsertOne(users) ${err}`);
               //Добавление записи в таблицу userData
               console.log(`count users: ${num}`);
               const collectionData = db.collection("userData");
-              collectionData.insertOne({"_id": usersCount, "name": req.body.name, "surname": req.body.surname, "patronymic": req.body.patronymic, "age": req.body.age}, function(err, results){
+              collectionData.insertOne({"_id": `${num}`, "name": req.body.name, "surname": req.body.surname, "patronymic": req.body.patronymic, "age": `${req.body.age}`}, function(err, results){
                 if(err) return console.error(err);
                 // ----- response -----
                 res.setHeader('Content-Type', 'application/json');
                 res.send(`{"response": true}`);
                 res.statusCode = 200;
-                return console.log(`Reg'd: l:${req.body.login} p:${res.body.password}`);
+                return console.log(`Reg'd: l:${req.body.login}`);
               });
             });
           }
