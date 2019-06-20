@@ -19,7 +19,7 @@ module.exports = function(app, mongoClient){
           }
           else{
             res.setHeader('Content-Type', 'application/json');
-            res.send(`{"response":false}`);
+            res.send(`{"response": false}`);
             res.statusCode = 303;
             console.log(`post findOne: results=null`);
           }
@@ -93,7 +93,7 @@ module.exports = function(app, mongoClient){
         count = num
       });
       const collectionN = db.collection("Tasks");
-      collectionN.insert(, function(err, results){
+      collectionN.insert({}, function(err, results){
         if(err)
         {return console.log("Api error: " + err);}
         res.statusCode = 201;
